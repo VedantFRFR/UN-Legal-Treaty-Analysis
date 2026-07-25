@@ -1,0 +1,236 @@
+[
+  {
+    "sample_id": "CON_003",
+    "strategy": "CONCEPTUAL",
+    "relevant_paths": [
+      "ICESCR/7",
+      "ICESCR/7/1",
+      "CEDAW/11/1",
+      "CEDAW/11/2",
+      "CEDAW/11/1/1",
+      "CEDAW/11/1/2",
+      "CEDAW/11/1/3",
+      "CEDAW/11/1/4",
+      "CEDAW/11/1/5",
+      "CEDAW/11/1/6",
+      "CEDAW/11/2/1",
+      "CEDAW/11/2/2",
+      "CEDAW/11/2/3",
+      "CEDAW/11/2/4"
+    ],
+    "question": "How do the ICESCR and CEDAW complement each other in protecting fair working conditions for women?",
+    "ground_truth": "ICESCR Article 7 recognizes everyone's right to just working conditions. CEDAW Article 11 specifically requires eliminating discrimination against women in employment, ensuring equal rights to work, career opportunities, remuneration, and social benefits."
+  },
+  {
+    "sample_id": "CON_006",
+    "strategy": "CONCEPTUAL",
+    "relevant_paths": [
+      "ICCPR/7",
+      "ICCPR/4/1",
+      "ICCPR/4/2",
+      "ICCPR/4/3",
+      "CONVENTION AGAINST TORTURE/2/1",
+      "CONVENTION AGAINST TORTURE/2/2",
+      "CONVENTION AGAINST TORTURE/2/3",
+      "CONVENTION AGAINST TORTURE/11"
+    ],
+    "question": "What measures do ICCPR and CAT provide for preventing torture?",
+    "ground_truth": "ICCPR Article 7 prohibits torture absolutely with no derogation permitted under Article 4. CAT Article 2 requires effective preventive measures and provides no exceptional circumstances can justify torture. Article 11 requires systematic review of interrogation rules."
+  },
+  {
+    "sample_id": "CON_020",
+    "strategy": "CONCEPTUAL",
+    "relevant_paths": [
+      "ICCPR/7",
+      "REFUGEE CONVENTION/33/1",
+      "REFUGEE CONVENTION/33/2",
+      "CONVENTION AGAINST TORTURE/3/1",
+      "CONVENTION AGAINST TORTURE/3/2",
+      "CONVENTION AGAINST TORTURE/1/1",
+      "CONVENTION AGAINST TORTURE/1/2"
+    ],
+    "question": "How does the prohibition of torture interact with non-refoulement protections across treaties?",
+    "ground_truth": "ICCPR Article 7's absolute prohibition of torture, Refugee Convention Article 33's non-refoulement, and CAT Article 3's prohibition on returning persons to torture risk create overlapping and complementary protections."
+  },
+  {
+    "sample_id": "CON_021",
+    "strategy": "CONCEPTUAL",
+    "relevant_paths": [
+      "ICCPR/14/1",
+      "ICCPR/14/2",
+      "ICCPR/14/3",
+      "ICCPR/14/4",
+      "ICCPR/14/5",
+      "ICCPR/14/6",
+      "ICCPR/14/7",
+      "REFUGEE CONVENTION/16/1",
+      "REFUGEE CONVENTION/16/2",
+      "REFUGEE CONVENTION/16/3"
+    ],
+    "question": "How do fair trial guarantees and refugee access to courts work together under international law?",
+    "ground_truth": "ICCPR Article 14 guarantees fair and public hearing by an independent tribunal. Refugee Convention Article 16 grants refugees free access to courts. Together they ensure fair treatment and unhindered access to legal proceedings."
+  },
+  {
+    "sample_id": "DEF_004",
+    "strategy": "DEFINITIONAL",
+    "relevant_paths": [
+      "REFUGEE CONVENTION/33/1",
+      "REFUGEE CONVENTION/33/2"
+    ],
+    "question": "What does Article 33 of the Refugee Convention prohibit?",
+    "ground_truth": "Article 33 of the Refugee Convention, known as non-refoulement, prohibits Contracting States from expelling or returning a refugee to territories where their life or freedom would be threatened on account of race, religion, nationality, social group or political opinion."
+  },
+  {
+    "sample_id": "DEF_007",
+    "strategy": "DEFINITIONAL",
+    "relevant_paths": [
+      "ICCPR/18/1",
+      "ICCPR/18/2",
+      "ICCPR/18/3",
+      "ICCPR/18/4"
+    ],
+    "question": "What right does Article 18 of ICCPR protect?",
+    "ground_truth": "Article 18 of ICCPR protects freedom of thought, conscience and religion, including freedom to have or adopt a religion and to manifest it in worship, observance, practice and teaching."
+  },
+  {
+    "sample_id": "DEF_014",
+    "strategy": "DEFINITIONAL",
+    "relevant_paths": [
+      "ICCPR/6/1",
+      "ICCPR/6/2",
+      "ICCPR/6/3",
+      "ICCPR/6/4",
+      "ICCPR/6/5"
+    ],
+    "question": "What does Article 6 of ICCPR protect?",
+    "ground_truth": "Article 6 of ICCPR protects the right to life as inherent to every person. It provides that no one shall be arbitrarily deprived of life and that the right shall be protected by law."
+  },
+  {
+    "sample_id": "DEF_021",
+    "strategy": "DEFINITIONAL",
+    "relevant_paths": [
+      "CEDAW/16/1",
+      "CEDAW/16/1/1",
+      "CEDAW/16/1/2",
+      "CEDAW/16/1/5",
+      "CEDAW/16/1/8"
+    ],
+    "question": "What rights does Article 16 of CEDAW address?",
+    "ground_truth": "Article 16 addresses discrimination in marriage and family relations, requiring equal rights to enter marriage, during marriage, at dissolution, parental rights, family planning, and property matters."
+  },
+  {
+    "sample_id": "PRO_001",
+    "strategy": "PROVISION_SEARCH",
+    "relevant_paths": [
+      "ICCPR/4/1",
+      "ICCPR/4/2",
+      "ICCPR/4/3",
+      "ICCPR/5/1",
+      "ICCPR/5/2",
+      "ICCPR/18/3",
+      "ICCPR/19/3",
+      "ICCPR/21",
+      "ICCPR/22/3",
+      "ICCPR/20/1",
+      "ICCPR/20/2"
+    ],
+    "question": "What are all the permissible restrictions to rights under ICCPR?",
+    "ground_truth": "ICCPR allows restrictions through Article 4 (emergency derogation), Articles 18-19-21-22 (limitation clauses for national security, order, health, morals), and Article 20 (mandatory hate speech prohibition)."
+  },
+  {
+    "sample_id": "PRO_004",
+    "strategy": "PROVISION_SEARCH",
+    "relevant_paths": [
+      "REFUGEE CONVENTION/12/1",
+      "REFUGEE CONVENTION/12/2",
+      "REFUGEE CONVENTION/13",
+      "REFUGEE CONVENTION/14",
+      "REFUGEE CONVENTION/15",
+      "REFUGEE CONVENTION/16/1",
+      "REFUGEE CONVENTION/16/2",
+      "REFUGEE CONVENTION/16/3",
+      "REFUGEE CONVENTION/17/1",
+      "REFUGEE CONVENTION/17/2",
+      "REFUGEE CONVENTION/18",
+      "REFUGEE CONVENTION/19/1",
+      "REFUGEE CONVENTION/20",
+      "REFUGEE CONVENTION/21",
+      "REFUGEE CONVENTION/22/1",
+      "REFUGEE CONVENTION/23",
+      "REFUGEE CONVENTION/24/1",
+      "REFUGEE CONVENTION/24/2",
+      "REFUGEE CONVENTION/25/1",
+      "REFUGEE CONVENTION/25/2",
+      "REFUGEE CONVENTION/26",
+      "REFUGEE CONVENTION/27",
+      "REFUGEE CONVENTION/28/1",
+      "REFUGEE CONVENTION/29/1",
+      "REFUGEE CONVENTION/30/1",
+      "REFUGEE CONVENTION/31/1"
+    ],
+    "question": "What are all the obligations of states regarding treatment of refugees within their territory under the Refugee Convention?",
+    "ground_truth": "The Refugee Convention provides multiple rights: personal status (12), property (13-14), association (15), access to courts (16), employment (17-19), welfare (20-24), administrative assistance (25), movement (26), identity papers (27-28), fiscal charges (29), asset transfer (30), and non-penalization for illegal entry (31)."
+  },
+  {
+    "sample_id": "PRO_010",
+    "strategy": "PROVISION_SEARCH",
+    "relevant_paths": [
+      "ICCPR/6/1",
+      "ICCPR/6/2",
+      "ICCPR/6/3",
+      "ICCPR/6/4",
+      "ICCPR/6/5",
+      "ICCPR/6/6",
+      "ICCPR/7",
+      "ICCPR/8/1",
+      "ICCPR/8/2",
+      "ICCPR/9/1",
+      "ICCPR/9/2",
+      "ICCPR/9/3",
+      "ICCPR/9/4",
+      "ICCPR/9/5",
+      "ICCPR/10/1",
+      "ICCPR/10/2/1",
+      "ICCPR/10/3",
+      "ICCPR/11",
+      "ICCPR/11/1",
+      "ICCPR/11/2",
+      "ICCPR/11/3",
+      "ICCPR/11/4"
+    ],
+    "question": "What provisions in ICCPR address personal liberty and security?",
+    "ground_truth": "Article 6: right to life. Article 7: prohibition of torture. Article 8: prohibition of slavery. Article 9: liberty and security, prohibiting arbitrary arrest. Article 10: humane treatment of detainees. Article 11: no imprisonment for debt."
+  },
+  {
+    "sample_id": "PRO_015",
+    "strategy": "PROVISION_SEARCH",
+    "relevant_paths": [
+      "ICCPR/4/1",
+      "ICCPR/4/2",
+      "ICCPR/4/3",
+      "ICCPR/6/1",
+      "ICCPR/6/2",
+      "ICCPR/6/3",
+      "ICCPR/6/4",
+      "ICCPR/6/5",
+      "ICCPR/6/6",
+      "ICCPR/7",
+      "ICCPR/8/1",
+      "ICCPR/8/2",
+      "ICCPR/11",
+      "ICCPR/11/1",
+      "ICCPR/11/2",
+      "ICCPR/11/3",
+      "ICCPR/11/4",
+      "ICCPR/15/1",
+      "ICCPR/15/2",
+      "ICCPR/16",
+      "ICCPR/18/1",
+      "ICCPR/18/2",
+      "ICCPR/18/3",
+      "ICCPR/18/4"
+    ],
+    "question": "Which rights can never be suspended by a state, even during a national emergency?",
+    "ground_truth": "Non-derogable rights under Article 4 include: life (6), torture prohibition (7), slavery (8), debt imprisonment (11), retroactive criminal law (15), legal recognition (16), and freedom of thought/religion (18)."
+  }
+]

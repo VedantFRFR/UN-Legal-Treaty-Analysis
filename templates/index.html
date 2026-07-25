@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legal Analysis</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #111; color: #e0e0e0; min-height: 100vh; display: flex; justify-content: center; padding: 40px 20px; }
+  .container { width: 100%; max-width: 800px; }
+  h1 { font-size: 24px; font-weight: 600; margin-bottom: 4px; color: #f0f0f0; }
+  .subtitle { color: #888; font-size: 14px; margin-bottom: 24px; }
+  .card { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 8px; padding: 20px; margin-bottom: 16px; }
+  .card-title { font-size: 13px; font-weight: 600; color: #aaa; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.8px; display: flex; justify-content: space-between; align-items: center; }
+  .card-title .clear-btn { padding: 4px 10px; font-size: 11px; background: #2a1a1a; color: #e74c3c; border: 1px solid #3a2020; border-radius: 4px; cursor: pointer; font-weight: 400; text-transform: none; letter-spacing: 0; }
+  .card-title .clear-btn:hover { background: #3a2020; }
+  .upload-area { border: 2px dashed #333; border-radius: 8px; padding: 24px; text-align: center; cursor: pointer; transition: all 0.15s; }
+  .upload-area:hover { border-color: #555; background: #1e1e1e; }
+  .upload-area.dragover { border-color: #5699ff; background: #1a2230; }
+  .upload-area.has-files { border-color: #5699ff; background: #1a2230; }
+  .upload-icon { font-size: 28px; margin-bottom: 8px; color: #666; }
+  .upload-text { font-size: 14px; color: #ccc; }
+  .upload-hint { font-size: 12px; color: #666; margin-top: 4px; }
+  .file-list { margin-top: 12px; display: none; }
+  .file-list.show { display: block; }
+  .file-item { font-size: 13px; padding: 4px 8px; background: #222; border-radius: 4px; margin-bottom: 4px; color: #bbb; }
+  .btn { padding: 8px 20px; font-size: 14px; font-weight: 500; border: none; border-radius: 6px; cursor: pointer; transition: background 0.15s; }
+  .btn-primary { background: #2d6cdf; color: #fff; }
+  .btn-primary:hover { background: #1a5bbf; }
+  .btn-primary:disabled { background: #333; color: #666; cursor: not-allowed; }
+  .upload-btn { margin-top: 12px; }
+  .upload-progress { display: none; align-items: center; gap: 10px; margin-top: 12px; padding: 10px; background: #1a2230; border: 1px solid #2a3a50; border-radius: 6px; font-size: 13px; color: #5699ff; }
+  .upload-progress.show { display: flex; }
+  .upload-status { margin-top: 8px; font-size: 13px; padding: 8px 12px; border-radius: 6px; display: none; }
+  .upload-status.show { display: block; }
+  .upload-status.success { background: #0a2a1a; color: #3dbf6a; border: 1px solid #1a3a2a; }
+  .upload-status.error { background: #2a1a1a; color: #e74c3c; border: 1px solid #3a2020; }
+  .upload-status.info { background: #1a2230; color: #5699ff; border: 1px solid #2a3a50; }
+  .doc-list { margin-top: 12px; }
+  .doc-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border: 1px solid #2a2a2a; border-radius: 6px; margin-bottom: 6px; font-size: 13px; }
+  .doc-item .name { font-weight: 500; color: #ccc; }
+  .doc-item .chunks { color: #666; font-size: 12px; }
+  .doc-item .delete-btn { padding: 4px 10px; font-size: 12px; background: #2a1a1a; color: #e74c3c; border: 1px solid #3a2020; border-radius: 4px; cursor: pointer; }
+  .doc-item .delete-btn:hover { background: #3a2020; }
+  .doc-empty { font-size: 13px; color: #555; text-align: center; padding: 16px; }
+  .query-section { margin-top: 0; }
+  form { display: flex; gap: 8px; }
+  input[type="text"] { flex: 1; padding: 12px 16px; font-size: 15px; background: #1a1a1a; color: #e0e0e0; border: 1px solid #333; border-radius: 6px; outline: none; transition: border-color 0.15s; }
+  input[type="text"]:focus { border-color: #5699ff; }
+  input[type="text"]::placeholder { color: #555; }
+  .btn-search { padding: 12px 24px; font-size: 15px; font-weight: 500; background: #2d6cdf; color: #fff; border: none; border-radius: 6px; cursor: pointer; white-space: nowrap; }
+  .btn-search:hover { background: #1a5bbf; }
+  .btn-search:disabled { background: #333; color: #666; cursor: not-allowed; }
+  .loading { display: none; align-items: center; gap: 10px; padding: 16px; background: #1a2230; border: 1px solid #2a3a50; border-radius: 6px; margin-bottom: 0; color: #5699ff; font-size: 14px; }
+  .loading.show { display: flex; }
+  .spinner { width: 18px; height: 18px; border: 2px solid #2a3a50; border-top-color: #5699ff; border-radius: 50%; animation: spin 0.6s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .result { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 8px; padding: 24px; display: none; }
+  .result.show { display: block; }
+  .answer { font-size: 15px; line-height: 1.7; margin-bottom: 20px; color: #d0d0d0; }
+  .answer p { margin-bottom: 10px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 12px; padding-top: 16px; border-top: 1px solid #2a2a2a; font-size: 13px; color: #666; }
+  .meta span { background: #222; padding: 4px 10px; border-radius: 4px; }
+  .error { background: #2a1a1a; border: 1px solid #3a2020; border-radius: 6px; padding: 12px 16px; color: #e74c3c; font-size: 14px; margin-bottom: 16px; display: none; }
+  .error.show { display: block; }
+  .examples { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+  .examples button { padding: 6px 14px; font-size: 13px; background: #222; color: #999; border: 1px solid #333; border-radius: 4px; cursor: pointer; }
+  .examples button:hover { background: #2a2a2a; color: #ccc; }
+  hr { border: none; border-top: 1px solid #2a2a2a; margin: 16px 0; }
+  @media (max-width: 600px) { form { flex-direction: column; } .btn-search { width: 100%; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Legal Analysis</h1>
+  <p class="subtitle">Upload your own PDFs, then ask questions about them</p>
+
+  <!-- Upload Card -->
+  <div class="card">
+    <div class="card-title">Upload Documents</div>
+    <div class="upload-area" id="uploadArea">
+      <div class="upload-icon">&#x1F4C4;</div>
+      <div class="upload-text">Drop PDFs here or click to browse</div>
+      <div class="upload-hint">You can select multiple files at once</div>
+      <input type="file" id="fileInput" accept=".pdf" multiple style="display:none">
+    </div>
+    <div class="file-list" id="fileList"></div>
+    <button class="btn btn-primary upload-btn" id="uploadBtn" disabled>Upload</button>
+    <div class="upload-progress" id="uploadProgress">
+      <div class="spinner"></div>
+      <span>Chunking and embedding documents...</span>
+    </div>
+    <div class="upload-status" id="uploadStatus"></div>
+  </div>
+
+  <!-- Documents Card -->
+  <div class="card" id="documentsCard">
+    <div class="card-title">
+      <span>Documents in Corpus</span>
+      <button class="clear-btn" id="clearBtn" style="display:none" onclick="clearCorpus()">Clear Corpus</button>
+    </div>
+    <div class="doc-list" id="docList">
+      <div class="doc-empty">Loading...</div>
+    </div>
+  </div>
+
+  <!-- Query Card -->
+  <div class="card query-section">
+    <div class="examples">
+      <button type="button" onclick="setQuery('What does Article 7 say')">What does Article 7 say</button>
+      <button type="button" onclick="setQuery('List all derogations in ICCPR')">List all derogations in ICCPR</button>
+      <button type="button" onclick="setQuery('How are minority rights protected')">How are minority rights protected</button>
+    </div>
+    <form id="queryForm" onsubmit="submitQuery(event)">
+      <input type="text" id="queryInput" name="query" placeholder="Enter your legal query..." required autofocus>
+      <button type="submit" class="btn-search" id="submitBtn">Search</button>
+    </form>
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <span>Processing query through the pipeline...</span>
+    </div>
+  </div>
+
+  <div class="error" id="error"></div>
+  <div class="result" id="result">
+    <div class="answer" id="answer"></div>
+    <div class="meta" id="meta"></div>
+  </div>
+</div>
+
+<script>
+let selectedFiles = [];
+
+const uploadArea = document.getElementById('uploadArea');
+const fileInput = document.getElementById('fileInput');
+const uploadBtn = document.getElementById('uploadBtn');
+const fileListEl = document.getElementById('fileList');
+
+uploadArea.addEventListener('click', () => fileInput.click());
+
+uploadArea.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  uploadArea.classList.add('dragover');
+});
+uploadArea.addEventListener('dragleave', () => {
+  uploadArea.classList.remove('dragover');
+});
+uploadArea.addEventListener('drop', (e) => {
+  e.preventDefault();
+  uploadArea.classList.remove('dragover');
+  const files = e.dataTransfer.files;
+  if (files.length) addFiles(files);
+});
+
+fileInput.addEventListener('change', (e) => {
+  if (e.target.files.length) addFiles(e.target.files);
+});
+
+function addFiles(files) {
+  for (const f of files) {
+    if (!f.name.toLowerCase().endsWith('.pdf')) {
+      showUploadStatus(`"${f.name}" is not a PDF — skipped`, 'error');
+      continue;
+    }
+    if (!selectedFiles.find(sf => sf.name === f.name && sf.size === f.size)) {
+      selectedFiles.push(f);
+    }
+  }
+  renderFileList();
+}
+
+function renderFileList() {
+  if (selectedFiles.length === 0) {
+    fileListEl.classList.remove('show');
+    uploadBtn.disabled = true;
+    uploadArea.classList.remove('has-files');
+    uploadArea.querySelector('.upload-text').textContent = 'Drop PDFs here or click to browse';
+    return;
+  }
+  uploadArea.classList.add('has-files');
+  uploadArea.querySelector('.upload-text').textContent = `${selectedFiles.length} file(s) selected`;
+  fileListEl.classList.add('show');
+  fileListEl.innerHTML = selectedFiles.map((f, i) =>
+    `<div class="file-item">${escapeHtml(f.name)} (${(f.size / 1024).toFixed(0)} KB)</div>`
+  ).join('');
+  uploadBtn.disabled = false;
+}
+
+uploadBtn.addEventListener('click', async () => {
+  if (selectedFiles.length === 0) return;
+  uploadBtn.disabled = true;
+  document.getElementById('uploadProgress').classList.add('show');
+  document.getElementById('uploadStatus').className = 'upload-status';
+  const formData = new FormData();
+  for (const f of selectedFiles) {
+    formData.append('files', f);
+  }
+  try {
+    const res = await fetch('/upload', { method: 'POST', body: formData });
+    const data = await res.json();
+    if (res.ok && data.results) {
+      const successCount = data.results.filter(r => r.status === 'success').length;
+      const errorCount = data.results.filter(r => r.status === 'error').length;
+      let msg = `${successCount} file(s) uploaded successfully`;
+      if (errorCount) msg += `, ${errorCount} failed`;
+      showUploadStatus(msg, errorCount ? 'info' : 'success');
+      data.results.forEach(r => {
+        if (r.status === 'success') console.log(`${r.doc_name}: ${r.inserted} chunks inserted`);
+        else console.error(`${r.doc_name}: ${r.error}`);
+      });
+      selectedFiles = [];
+      renderFileList();
+      loadDocuments();
+    } else {
+      showUploadStatus(data.detail || 'Upload failed', 'error');
+    }
+  } catch (err) {
+    showUploadStatus('Upload failed: ' + err.message, 'error');
+  } finally {
+    document.getElementById('uploadProgress').classList.remove('show');
+    uploadBtn.disabled = false;
+  }
+});
+
+function showUploadStatus(msg, type) {
+  const el = document.getElementById('uploadStatus');
+  el.textContent = msg;
+  el.className = 'upload-status show ' + type;
+}
+
+async function loadDocuments() {
+  const el = document.getElementById('docList');
+  const clearBtn = document.getElementById('clearBtn');
+  try {
+    const res = await fetch('/documents');
+    const data = await res.json();
+    if (!data.documents || data.documents.length === 0) {
+      el.innerHTML = '<div class="doc-empty">No documents in corpus. Upload PDFs to get started.</div>';
+      clearBtn.style.display = 'none';
+    } else {
+      clearBtn.style.display = 'inline-block';
+      el.innerHTML = data.documents.map(d =>
+        `<div class="doc-item">
+          <div>
+            <div class="name">${escapeHtml(d.name)}</div>
+            <div class="chunks">${d.chunks} chunks</div>
+          </div>
+          <button class="delete-btn" onclick="deleteDoc('${escapeHtml(d.name)}')">Delete</button>
+        </div>`
+      ).join('');
+    }
+  } catch (err) {
+    el.innerHTML = '<div class="doc-empty">Failed to load documents</div>';
+  }
+}
+
+async function deleteDoc(name) {
+  if (!confirm(`Delete "${name}" from the corpus?`)) return;
+  try {
+    const res = await fetch('/documents/' + encodeURIComponent(name), { method: 'DELETE' });
+    if (res.ok) {
+      showUploadStatus(`"${name}" deleted`, 'info');
+      loadDocuments();
+    }
+  } catch (err) {
+    console.error('Delete failed', err);
+  }
+}
+
+async function clearCorpus() {
+  if (!confirm('Delete ALL documents from the corpus? This cannot be undone.')) return;
+  try {
+    const res = await fetch('/corpus/clear', { method: 'POST' });
+    const data = await res.json();
+    if (res.ok) {
+      showUploadStatus(`Corpus cleared — ${data.chunks_removed} chunks removed`, 'info');
+      loadDocuments();
+    }
+  } catch (err) {
+    console.error('Clear failed', err);
+  }
+}
+
+function escapeHtml(s) {
+  const div = document.createElement('div');
+  div.textContent = s;
+  return div.innerHTML;
+}
+
+function setQuery(text) {
+  document.getElementById('queryInput').value = text;
+}
+
+async function submitQuery(e) {
+  e.preventDefault();
+  const query = document.getElementById('queryInput').value.trim();
+  if (!query) return;
+  document.getElementById('result').classList.remove('show');
+  document.getElementById('error').classList.remove('show');
+  document.getElementById('submitBtn').disabled = true;
+  document.getElementById('loading').classList.add('show');
+  try {
+    const res = await fetch('/query', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query }),
+    });
+    const data = await res.json();
+    if (data.error) {
+      document.getElementById('error').textContent = data.error;
+      document.getElementById('error').classList.add('show');
+    } else {
+      document.getElementById('answer').innerHTML = data.answer.replace(/\n/g, '<br>');
+      document.getElementById('meta').innerHTML =
+        `<span>Type: ${data.query_type}</span>` +
+        `<span>Confidence: ${data.retrieval_confidence}</span>` +
+        `<span>Chunks: ${data.chunks_retrieved} → ${data.chunks_post_filter}</span>`;
+      document.getElementById('result').classList.add('show');
+    }
+  } catch (err) {
+    document.getElementById('error').textContent = 'Request failed: ' + err.message;
+    document.getElementById('error').classList.add('show');
+  } finally {
+    document.getElementById('submitBtn').disabled = false;
+    document.getElementById('loading').classList.remove('show');
+  }
+}
+
+loadDocuments();
+</script>
+</body>
+</html>
